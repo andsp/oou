@@ -18,6 +18,9 @@ public class Instance {
     private String db;
 
 
+    public Instance() {
+    }
+
     public Instance(int id, String path, String host, String port, String user, String pass, String db) {
         this.id = id;
         this.path = path;

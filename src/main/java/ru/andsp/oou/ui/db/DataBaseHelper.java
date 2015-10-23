@@ -8,10 +8,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class DataBaseHelper implements Closeable {
+class DataBaseHelper implements Closeable {
 
 
-    protected Connection connection;
+    Connection connection;
 
     private void connect() throws ClassNotFoundException, SQLException {
         connection = null;
@@ -19,19 +19,19 @@ public class DataBaseHelper implements Closeable {
         connection = DriverManager.getConnection("jdbc:sqlite:oou.s3db");
     }
 
-    public void createTable() throws ClassNotFoundException, SQLException {
-        try (Statement statmt = connection.createStatement()) {
-            statmt.execute("CREATE TABLE if not exists 'instance' ('id' INTEGER PRIMARY KEY AUTOINCREMENT, " +
+    private void createTable() throws SQLException {
+        try (Statement statement = connection.createStatement()) {
+            statement.execute("CREATE TABLE if not exists 'instance' ('id' INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     "'path' text,'host' text, 'port' text,'user' text,'pass' text,'db' text);");
         }
     }
 
-    protected boolean isConnected() {
+    private boolean isConnected() {
         return connection != null;
     }
 
 
-    public DataBaseHelper() throws SQLException, ClassNotFoundException {
+    DataBaseHelper() throws SQLException, ClassNotFoundException {
         connect();
         if (isConnected())
             createTable();

@@ -6,9 +6,9 @@ import javax.swing.table.TableModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InstanceTableModel implements TableModel {
+class InstanceTableModel implements TableModel {
 
-    private List<Instance> data;
+    private final List<Instance> data;
 
     public InstanceTableModel(List<Instance> data) {
         this.data = (data == null) ? new ArrayList<Instance>() : data;
@@ -86,5 +86,9 @@ public class InstanceTableModel implements TableModel {
 
     public void removeTableModelListener(TableModelListener l) {
 
+    }
+
+    public Instance getItem(int rowIndex) {
+        return rowIndex < data.size() & rowIndex>=0 ? data.get(rowIndex) : null;
     }
 }
