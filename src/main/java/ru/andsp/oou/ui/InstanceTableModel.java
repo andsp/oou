@@ -3,6 +3,7 @@ package ru.andsp.oou.ui;
 
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
+import java.util.ArrayList;
 import java.util.List;
 
 public class InstanceTableModel implements TableModel {
@@ -10,7 +11,7 @@ public class InstanceTableModel implements TableModel {
     private List<Instance> data;
 
     public InstanceTableModel(List<Instance> data) {
-        this.data = data;
+        this.data = (data == null) ? new ArrayList<Instance>() : data;
     }
 
 

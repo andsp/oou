@@ -3,6 +3,8 @@ package ru.andsp.oou.ui;
 
 public class Instance {
 
+    private int id;
+
     private String path;
 
     private String host;
@@ -16,13 +18,22 @@ public class Instance {
     private String db;
 
 
-    public Instance(String path, String host, String port, String user, String pass, String db) {
+    public Instance(int id, String path, String host, String port, String user, String pass, String db) {
+        this.id = id;
         this.path = path;
         this.host = host;
         this.port = port;
         this.user = user;
         this.pass = pass;
         this.db = db;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getPath() {
@@ -69,12 +80,16 @@ public class Instance {
         return db;
     }
 
-    public void setDb(String ddb) {
+    public void setDb(String db) {
         this.db = db;
+    }
+
+    public boolean isNew() {
+        return !(id > 0);
     }
 
     @Override
     public String toString() {
-        return  String.format("%s %s",host,db);
+        return String.format("%s %s", host, db);
     }
 }
