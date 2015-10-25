@@ -5,7 +5,6 @@ import ru.andsp.oou.type.OracleObject;
 import ru.andsp.oou.type.TypeObject;
 
 import javax.sql.DataSource;
-import java.io.IOException;
 import java.sql.SQLException;
 
 public class TableHelper implements ObjectHelper {
@@ -14,8 +13,4 @@ public class TableHelper implements ObjectHelper {
         return null;
     }
 
-    @Override
-    public void close() throws IOException {
-
-    }
 }

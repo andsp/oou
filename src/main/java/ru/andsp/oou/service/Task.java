@@ -30,6 +30,7 @@ public class Task implements Runnable {
         }
         if (object != null) {
             Storage.save(object, path);
+            System.out.println(object.getName());
         }
     }
 }

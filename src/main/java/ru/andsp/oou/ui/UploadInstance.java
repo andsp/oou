@@ -13,10 +13,11 @@ public class UploadInstance {
 
     private static DataSource getDataSource(Instance instance) {
         HikariConfig config = new HikariConfig();
-        config.setJdbcUrl(String.format("jdbc:oracle:thin:@%s:%s:%s", instance.getHost(), instance.getPort(), instance.getDb()));
+        String url = String.format("jdbc:oracle:thin:@%s:%s:%s", instance.getHost(), instance.getPort(), instance.getDb());
+        config.setJdbcUrl(url);
         config.setUsername(instance.getUser());
+        config.setMaximumPoolSize(16);
         config.setPassword(instance.getPass());
-        config.setDataSourceClassName("oracle.jdbc.pool.OracleDataSource");
         Locale.setDefault(Locale.ENGLISH);
         return new HikariDataSource(config);
     }
@@ -24,6 +25,8 @@ public class UploadInstance {
     public static synchronized void start(Instance instance) throws SQLException {
         DataSource dataSource = getDataSource(instance);
         ObjectUploader objectUploader = new ObjectUploader();
+        long st = System.currentTimeMillis();
         objectUploader.upload(dataSource, instance.getPath());
+        System.out.println("time "+(System.currentTimeMillis()-st));
     }
 }

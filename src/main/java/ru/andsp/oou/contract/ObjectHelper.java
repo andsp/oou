@@ -7,7 +7,7 @@ import ru.andsp.oou.type.TypeObject;
 import javax.sql.DataSource;
 import java.sql.SQLException;
 
-public interface ObjectHelper extends AutoCloseable {
+public interface ObjectHelper {
 
     OracleObject load(DataSource dataSource, TypeObject type, String name) throws SQLException;
 
