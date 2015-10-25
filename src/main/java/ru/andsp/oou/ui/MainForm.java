@@ -3,8 +3,6 @@ package ru.andsp.oou.ui;
 import ru.andsp.oou.ui.db.InstanceHelper;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -54,32 +52,30 @@ public class MainForm {
     private void initUI() {
         tblMain.setModel(new InstanceTableModel(getData()));
         tblMain.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        btAdd.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                PropertyForm.start(null);
-                refresh();
-            }
+        btAdd.addActionListener(e -> {
+            PropertyForm.start(null);
+            refresh();
         });
-        btEdit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                PropertyForm.start(((InstanceTableModel) tblMain.getModel()).getItem(tblMain.getSelectedRow()));
-                refresh();
-            }
+        btEdit.addActionListener(e -> {
+            PropertyForm.start(((InstanceTableModel) tblMain.getModel()).getItem(tblMain.getSelectedRow()));
+            refresh();
         });
-        btRemove.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try (InstanceHelper helper = new InstanceHelper()) {
-                    Instance instance = ((InstanceTableModel) tblMain.getModel()).getItem(tblMain.getSelectedRow());
-                    if (instance != null && !instance.isNew()) {
-                        helper.remove(instance.getId());
-                    }
-                } catch (ClassNotFoundException | SQLException | IOException e1) {
-                    e1.printStackTrace();
+        btRemove.addActionListener(e -> {
+            try (InstanceHelper helper = new InstanceHelper()) {
+                Instance instance = ((InstanceTableModel) tblMain.getModel()).getItem(tblMain.getSelectedRow());
+                if (instance != null && !instance.isNew()) {
+                    helper.remove(instance.getId());
                 }
-                refresh();
+            } catch (ClassNotFoundException | SQLException | IOException e1) {
+                e1.printStackTrace();
+            }
+            refresh();
+        });
+        btRun.addActionListener(e -> {
+            try {
+                UploadInstance.start(((InstanceTableModel) tblMain.getModel()).getItem(tblMain.getSelectedRow()));
+            } catch (SQLException e1) {
+                e1.printStackTrace();
             }
         });
     }
