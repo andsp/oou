@@ -1,6 +1,7 @@
 package ru.andsp.oou.service;
 
 
+import ru.andsp.oou.contract.ObjectHelper;
 import ru.andsp.oou.type.OracleObject;
 
 import javax.sql.DataSource;
@@ -21,10 +22,16 @@ public class Task implements Runnable {
         this.path = path;
     }
 
+
+    private ObjectHelper getHelper(){
+       return HelperFactory.getHelper(object.getTypeObject());
+    }
+
     @Override
     public void run() {
         try {
-            object = HelperFactory.getHelper(object.getTypeObject()).load(dataSource, object.getTypeObject(), object.getName());
+            ObjectHelper helper = getHelper();
+            object = helper.load(dataSource, object.getTypeObject(), object.getName());
         } catch (SQLException e) {
             e.printStackTrace();
         }
