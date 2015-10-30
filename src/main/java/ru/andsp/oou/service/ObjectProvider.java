@@ -19,7 +19,6 @@ public class ObjectProvider {
             "  from user_objects a\n" +
             " where a.object_type in (" +
             "                         'FUNCTION'\n" +
-            "                         ,'INDEX'\n" +
             "                         ,'PACKAGE'\n" +
             "                         ,'PROCEDURE'\n" +
             "                         ,'TYPE'\n" +
