@@ -20,6 +20,13 @@ public class Sequence extends OracleObject {
     private BigInteger start;
 
 
+    public Sequence(String name) {
+        super(name);
+        this.typeObject = TypeObject.SEQUENCE;
+        this.cycle = false;
+        this.order = false;
+    }
+
     public BigInteger getMax() {
         return max;
     }
@@ -76,13 +83,6 @@ public class Sequence extends OracleObject {
         this.start = start;
     }
 
-    public Sequence(String name) {
-        super(name);
-        this.typeObject = TypeObject.SEQUENCE;
-        this.cycle = false;
-        this.order = false;
-    }
-
     @Override
     public String getSource() {
         StringBuilder sb = new StringBuilder(String.format("CREATE SEQUENCE %s\n", this.name));
@@ -92,19 +92,19 @@ public class Sequence extends OracleObject {
         if (this.max != null) {
             sb.append(String.format("maxvalue %d\n", this.max));
         }
-        if(this.start!=null){
-            sb.append(String.format("start with %d\n",this.start));
+        if (this.start != null) {
+            sb.append(String.format("start with %d\n", this.start));
         }
-        if(this.increment!=null){
-            sb.append(String.format("increment by %d\n",this.increment));
+        if (this.increment != null) {
+            sb.append(String.format("increment by %d\n", this.increment));
         }
-        if(this.cache!=null){
-            sb.append(String.format("cache %d\n",this.cache));
+        if (this.cache != null && this.cache.compareTo(BigInteger.valueOf(0)) == 1) {
+            sb.append(String.format("cache %d\n", this.cache));
         }
-        if(this.cycle){
+        if (this.cycle) {
             sb.append("cycle\n");
         }
-        if(this.order){
+        if (this.order) {
             sb.append("order\n");
         }
         sb.append(";");

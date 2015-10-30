@@ -63,6 +63,8 @@ public class SequenceTest {
 
     @org.junit.Test
     public void testSetCache() throws Exception {
+        sequence.setCache(BigInteger.valueOf(0));
+        assertFalse("Не должен учитываться кеш",sequence.getSource().contains("cache"));
         sequence.setCache(val);
         assertEquals("Не установилось кеш", sequence.getCache(), val);
         assertTrue("Не учитывается кеш",sequence.getSource().contains("cache 1"));
