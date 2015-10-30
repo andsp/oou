@@ -72,9 +72,11 @@ public class Table extends OracleObject {
     }
 
     private String getColumnSource() {
-        StringBuilder sb = new StringBuilder("\n(");
+        StringBuilder sb = new StringBuilder("(\n");
         for (TableColumn tc : this.columnList) {
-            sb.append("\n,");
+            if (sb.length() > 3) {
+                sb.append("\n,");
+            }
             sb.append(tc.getSource());
         }
         sb.deleteCharAt(sb.length() - 1);

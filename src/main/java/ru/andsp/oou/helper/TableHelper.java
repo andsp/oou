@@ -56,7 +56,7 @@ public class TableHelper implements ObjectHelper {
                     column.setDecimal(resultSet.getInt("DATA_PRECISION"));
                     column.setLength(resultSet.getInt("DATA_LENGTH"));
                     column.setDefValue(resultSet.getString("DATA_DEFAULT"));
-                    column.setNullable(resultSet.getString("").equals("Y"));
+                    column.setNullable(resultSet.getString("NULLABLE").equals("Y"));
                     table.addColumn(column);
                 }
             }
