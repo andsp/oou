@@ -15,7 +15,7 @@ import java.sql.SQLException;
 public class ViewHelper implements ObjectHelper {
 
 
-    private static final String VIEW_QUERY = "select v.text from all_views v where v.VIEW_NAME = ? ";
+    private static final String VIEW_QUERY = "select v.text from user_views v where v.VIEW_NAME = ? ";
 
     @Override
     public OracleObject load(DataSource dataSource, TypeObject type, String name) throws SQLException {
@@ -25,7 +25,7 @@ public class ViewHelper implements ObjectHelper {
                 statement.setString(1, name.toUpperCase());
                 try (ResultSet resultSet = statement.executeQuery()) {
                     while (resultSet.next()) {
-                        view.setSource(resultSet.getString("TEXT"));
+                        view.setText(resultSet.getString("TEXT"));
                     }
                 }
             }

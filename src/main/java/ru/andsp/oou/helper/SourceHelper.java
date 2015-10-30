@@ -15,14 +15,14 @@ import java.sql.SQLException;
 
 public class SourceHelper implements ObjectHelper {
 
-    private static final String SOURCE_QUERY = "select s.text,case when line=1 and lag(s.line)over(order by s.type, s.line) is not null then 1 else 0 end pr_break from all_source s\n" +
+    private static final String SOURCE_QUERY = "select s.text,case when line=1 and lag(s.line)over(order by s.type, s.line) is not null then 1 else 0 end pr_break from user_source s\n" +
             "where s.name = ?\n" +
             "order by s.type,s.line";
 
 
     @Override
     public OracleObject load(DataSource dataSource, TypeObject type, String name) throws SQLException {
-        StringBuffer sb = new StringBuffer("CREATE OR REPLACE ");
+        StringBuilder sb = new StringBuilder("CREATE OR REPLACE ");
         try (Connection connection = dataSource.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(SOURCE_QUERY)) {
                 statement.setString(1, name.toUpperCase());

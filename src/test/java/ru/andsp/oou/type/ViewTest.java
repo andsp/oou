@@ -17,7 +17,8 @@ public class ViewTest {
 
     @Test
     public void testSetSource() throws Exception {
-        view.setSource("test");
-        assertEquals("Не верное отображение исходников",view.getSource(),"test");
+        view.setText("test");
+        assertEquals("Не верное отображение исходников",view.getSource(),"CREATE OR REPLACE FORCE VIEW test as\n" +
+                " test;");
     }
 }
