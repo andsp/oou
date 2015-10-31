@@ -17,9 +17,20 @@ public class TableColumn extends OracleObject {
     private Integer decimal;
 
 
+    private Integer numberLength;
+
+
     private boolean nullable = true;
 
     private String defValue;
+
+    public Integer getNumberLength() {
+        return numberLength;
+    }
+
+    public void setNumberLength(Integer numberLength) {
+        this.numberLength = numberLength;
+    }
 
     public String getDefValue() {
         return defValue;
@@ -65,27 +76,32 @@ public class TableColumn extends OracleObject {
         super(name);
     }
 
-    private String getLengthSource(){
-        if(this.length != null && this.decimal != null){
-            return String.format("(%d,%d)",this.length,this.decimal);
-        }else if(this.length != null){
-            return String.format("(%d)",this.length);
-        }else{
-            return "";
+
+    private String getLengthSource() {
+        switch (types) {
+            case NVARCHAR2:
+            case CHAR:
+            case RAW:
+            case VARCHAR2:
+                return String.format("(%s)", this.length);
+            case NUMBER:
+                return numberLength != null && decimal != null ? String.format("(%d,%d)", numberLength, decimal) :
+                        numberLength != null ? String.format("(%d)", this.numberLength) : null;
+            default:
+                return null;
         }
     }
 
     @Override
     public String getSource() {
-        StringBuilder sb = new StringBuilder(String.format("%s ",this.name));
+        StringBuilder sb = new StringBuilder(String.format("%s ", this.name));
         sb.append(this.types.toString().toLowerCase());
-        if(types.isLength()){
+        if (getLengthSource() != null)
             sb.append(this.getLengthSource());
-        }
-        if(defValue != null){
+        if (defValue != null) {
             sb.append(String.format("default %s", this.defValue));
         }
-        if(!this.nullable){
+        if (!this.nullable) {
             sb.append(" not null");
         }
         return sb.toString();

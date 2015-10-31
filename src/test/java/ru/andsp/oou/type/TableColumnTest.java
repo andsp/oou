@@ -21,10 +21,6 @@ public class TableColumnTest {
     public void testSetTypes() throws Exception {
         tc.setTypes(DataTypes.DATE);
         assertTrue("не установился тип данных DATE", tc.getSource().contains("DATE".toLowerCase()));
-        tc.setTypes(DataTypes.BINARY_DOUBLE);
-        assertTrue("не установился тип данных BINARY_DOUBLE", tc.getSource().contains("BINARY_DOUBLE".toLowerCase()));
-        tc.setTypes(DataTypes.BINARY_FLOAT);
-        assertTrue("не установился тип данных BINARY_FLOAT", tc.getSource().contains("BINARY_FLOAT".toLowerCase()));
         tc.setTypes(DataTypes.BLOB);
         assertTrue("не установился тип данных BLOB", tc.getSource().contains("BLOB".toLowerCase()));
         tc.setTypes(DataTypes.CHAR);
@@ -65,7 +61,7 @@ public class TableColumnTest {
     @Test
     public void testSetDecimal() throws Exception {
         tc.setTypes(DataTypes.NUMBER);
-        tc.setLength(18);
+        tc.setNumberLength(18);
         tc.setDecimal(2);
         assertEquals("не верно учитывается кол-во десятичной дроби", tc.getSource(), "test number(18,2)");
     }

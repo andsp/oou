@@ -61,15 +61,22 @@ public class MainForm {
             refresh();
         });
         btRemove.addActionListener(e -> {
-            try (InstanceHelper helper = new InstanceHelper()) {
-                Instance instance = ((InstanceTableModel) tblMain.getModel()).getItem(tblMain.getSelectedRow());
-                if (instance != null && !instance.isNew()) {
-                    helper.remove(instance.getId());
+            Instance instance = ((InstanceTableModel) tblMain.getModel()).getItem(tblMain.getSelectedRow());
+            if (instance != null && !instance.isNew()) {
+                int dialogButton = JOptionPane.YES_NO_OPTION;
+                int dialogResult = JOptionPane.showConfirmDialog(null, "Remove row ?", "Confirm", dialogButton);
+                if (dialogResult == 0) {
+                    try (InstanceHelper helper = new InstanceHelper()) {
+
+
+                        helper.remove(instance.getId());
+
+                    } catch (ClassNotFoundException | SQLException | IOException e1) {
+                        e1.printStackTrace();
+                    }
+                    refresh();
                 }
-            } catch (ClassNotFoundException | SQLException | IOException e1) {
-                e1.printStackTrace();
             }
-            refresh();
         });
         btRun.addActionListener(e -> {
             try {

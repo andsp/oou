@@ -36,11 +36,12 @@ public class TableHelper implements ObjectHelper {
             "       c.data_type,\n" +
             "       c.data_length,\n" +
             "       c.data_precision,\n" +
+            "       c.data_scale,\n" +
             "       c.nullable,\n" +
             "       c.data_default\n" +
             "  from user_tab_columns c\n" +
             " where c.table_name = ?\n" +
-            " order by c.COLUMN_ID";
+            " order by c.column_id";
 
 
     private Table table;
@@ -53,7 +54,8 @@ public class TableHelper implements ObjectHelper {
                 while (resultSet.next()) {
                     TableColumn column = new TableColumn(resultSet.getString("COLUMN_NAME"));
                     column.setTypes(DataTypes.valueOf(resultSet.getString("DATA_TYPE")));
-                    column.setDecimal(resultSet.getInt("DATA_PRECISION"));
+                    column.setNumberLength(resultSet.getInt("DATA_PRECISION"));
+                    column.setDecimal(resultSet.getInt("DATA_SCALE"));
                     column.setLength(resultSet.getInt("DATA_LENGTH"));
                     column.setDefValue(resultSet.getString("DATA_DEFAULT"));
                     column.setNullable(resultSet.getString("NULLABLE").equals("Y"));

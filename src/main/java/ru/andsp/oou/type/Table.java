@@ -79,7 +79,6 @@ public class Table extends OracleObject {
             }
             sb.append(tc.getSource());
         }
-        sb.deleteCharAt(sb.length() - 1);
         sb.append("\n)");
         return sb.toString();
     }
