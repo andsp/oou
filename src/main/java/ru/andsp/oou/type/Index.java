@@ -12,16 +12,21 @@ public class Index extends OracleObject {
 
     private String tablename;
 
-    public String getTablename() {
-        return tablename;
+    private boolean unique;
+
+    private boolean bitmap;
+
+
+    public void setBitmap(boolean bitmap) {
+        this.bitmap = bitmap;
+    }
+
+    public void setUnique(boolean unique) {
+        this.unique = unique;
     }
 
     public void setTablename(String tablename) {
         this.tablename = tablename;
-    }
-
-    public String getTablespace() {
-        return tablespace;
     }
 
     public void setTablespace(String tablespace) {
@@ -37,14 +42,33 @@ public class Index extends OracleObject {
 
     }
 
-    Index(String name) {
+    public Index(String name) {
         super(name);
-        this.typeObject = TypeObject.INDEX;
-        this.columns = new ArrayList<>();
+        typeObject = TypeObject.INDEX;
+        columns = new ArrayList<>();
+        unique = false;
+        bitmap = false;
     }
 
     @Override
     public String getSource() {
-        return String.format("create index %s on %s (%s)  tablespace %s;", this.name,this.tablename, this.getColumns(), this.tablespace);
+        StringBuilder source = new StringBuilder("create ");
+        if (unique) {
+            source.append("unique");
+        } else if (bitmap) {
+            source.append("bitmap");
+        }
+        source.append("index ")
+                .append(name)
+                .append(" on ")
+                .append(tablename)
+                .append("(")
+                .append(getColumns())
+                .append(")");
+        if (tablespace != null) {
+            source.append(" tablespace ").append(tablespace);
+        }
+        source.append(";");
+        return source.toString();
     }
 }

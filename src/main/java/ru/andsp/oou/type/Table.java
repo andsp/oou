@@ -25,20 +25,21 @@ public class Table extends OracleObject {
     public Table(String name) {
         super(name);
         this.typeObject = TypeObject.TABLE;
+        columnList = new ArrayList<>();
+        commentList = new ArrayList<>();
+        indexList = new ArrayList<>();
     }
 
     public void addColumn(TableColumn column) {
-        if (columnList == null) {
-            columnList = new ArrayList<>();
-        }
         columnList.add(column);
     }
 
     public void addColumnComment(TableColumnComment comment) {
-        if (commentList == null) {
-            commentList = new ArrayList<>();
-        }
         commentList.add(comment);
+    }
+
+    public void addIndex(Index index) {
+        indexList.add(index);
     }
 
     public boolean isTemporary() {

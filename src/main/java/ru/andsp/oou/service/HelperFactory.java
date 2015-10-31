@@ -27,8 +27,6 @@ public class HelperFactory {
                 return new TableHelper();
             case VIEW:
                 return new ViewHelper();
-            case INDEX:
-                return new IndexHelper();
             case SYNONYM:
                 return new SynonymHelper();
             default:

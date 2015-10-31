@@ -13,6 +13,7 @@ public class TableHelper implements ObjectHelper {
 
     private static final String ON_RESERVE = "SYS$SESSION";
 
+
     private static final String TABLE_QUERY = "select t.table_name,\n" +
             "       t.temporary,\n" +
             "       t.duration,\n" +
@@ -84,9 +85,6 @@ public class TableHelper implements ObjectHelper {
 
     }
 
-    private void indexsLoad(Connection connection) throws SQLException {
-
-    }
 
     private void tableLoad(Connection connection) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(TABLE_QUERY)) {
@@ -114,6 +112,11 @@ public class TableHelper implements ObjectHelper {
             columnCommentsLoad(connection);
         }
         return table;
+    }
+
+    private void indexsLoad(Connection connection) throws SQLException {
+        IndexHelper helper = new IndexHelper();
+        helper.loadFromTable(connection, table);
     }
 
 }
