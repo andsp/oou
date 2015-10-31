@@ -53,19 +53,12 @@ public class Table extends OracleObject {
         }
     }
 
-    public boolean isPreserve() {
-        return preserve;
-    }
 
     public void setPreserve(boolean preserve) {
         this.preserve = preserve;
         if (preserve) {
             this.temporary = true;
         }
-    }
-
-    public String getComment() {
-        return comment;
     }
 
     public void setComment(String comment) {
@@ -87,35 +80,47 @@ public class Table extends OracleObject {
     private String getColumnCommentSource() {
         StringBuilder sb = new StringBuilder();
         for (TableColumnComment c : commentList) {
-            sb.append(c.getSource());
             sb.append("\n");
+            sb.append(c.getSource());
+        }
+        return sb.toString();
+    }
+
+    private String getIndexSource() {
+        StringBuilder sb = new StringBuilder();
+        for (Index c : indexList) {
+            sb.append("\n");
+            sb.append(c.getSource());
         }
         return sb.toString();
     }
 
     @Override
     public String getSource() {
-        StringBuilder sb = new StringBuilder(String.format("CREATE TABLE %s\n", this.name));
-        if (this.columnList != null) {
-            sb.append(this.getColumnSource());
+        StringBuilder sb = new StringBuilder(String.format("CREATE TABLE %s\n", name));
+        if (columnList != null) {
+            sb.append(getColumnSource());
         }
         // temp
-        if (this.temporary && this.preserve) {
+        if (temporary && preserve) {
             sb.append("on commit preserve rows");
         }
-        if (this.temporary && !this.preserve) {
+        if (temporary && !preserve) {
             sb.append("on commit delete rows");
         }
         // end
         sb.append(";");
         // comment
-        if (this.comment != null) {
-            sb.append(String.format("\ncomment on table %s is '%s';", this.name, this.comment));
+        if (comment != null) {
+            sb.append(String.format("\ncomment on table %s is '%s';", name, comment));
         }
         // column comment
-        if (this.commentList != null) {
-            sb.append("\n").append(this.getColumnCommentSource());
-        }
+        if (!commentList.isEmpty())
+            sb.append(getColumnCommentSource());
+        // index
+        if (!indexList.isEmpty())
+            sb.append("\n").append(getIndexSource());
+
         return sb.toString();
     }
 

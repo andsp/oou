@@ -24,48 +24,24 @@ public class TableColumn extends OracleObject {
 
     private String defValue;
 
-    public Integer getNumberLength() {
-        return numberLength;
-    }
-
     public void setNumberLength(Integer numberLength) {
         this.numberLength = numberLength;
-    }
-
-    public String getDefValue() {
-        return defValue;
     }
 
     public void setDefValue(String defValue) {
         this.defValue = defValue;
     }
 
-    public DataTypes getTypes() {
-        return types;
-    }
-
     public void setTypes(DataTypes types) {
         this.types = types;
-    }
-
-    public int getLength() {
-        return length;
     }
 
     public void setLength(int length) {
         this.length = length;
     }
 
-    public int getDecimal() {
-        return decimal;
-    }
-
     public void setDecimal(int decimal) {
         this.decimal = decimal;
-    }
-
-    public boolean isNullable() {
-        return nullable;
     }
 
     public void setNullable(boolean nullable) {

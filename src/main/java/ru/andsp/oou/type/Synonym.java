@@ -8,24 +8,12 @@ public class Synonym extends OracleObject {
 
     private boolean publicSynonym;
 
-    public String getOwner() {
-        return owner;
-    }
-
     public void setOwner(String owner) {
         this.owner = owner;
     }
 
-    public String getNameObject() {
-        return nameObject;
-    }
-
     public void setNameObject(String nameObject) {
         this.nameObject = nameObject;
-    }
-
-    public boolean isPublicSynonym() {
-        return publicSynonym;
     }
 
     public void setPublicSynonym(boolean publicSynonym) {

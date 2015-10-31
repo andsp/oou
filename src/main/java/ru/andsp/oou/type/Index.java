@@ -38,8 +38,14 @@ public class Index extends OracleObject {
     }
 
     private String getColumns() {
-        return null;
-
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < columns.size(); i++) {
+            builder.append(columns.get(i));
+            if (i + 1 < columns.size()) {
+                builder.append(",");
+            }
+        }
+        return builder.toString();
     }
 
     public Index(String name) {

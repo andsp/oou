@@ -18,15 +18,15 @@ public class ObjectProvider {
             "       a.object_name \n" +
             "  from user_objects a\n" +
             " where a.object_type in (" +
-           // "                         'FUNCTION'\n" +
-            //"                         ,'PACKAGE'\n" +
-            //"                         ,'PROCEDURE'\n" +
-            //"                         ,'TYPE'\n" +
-            //"                         ,'VIEW'\n" +
-            //"                         ,'SEQUENCE'\n" +
-            //"                         ,'SYNONYM'\n" +
-            "                         'TABLE'\n" +
-           // "                         ,'TRIGGER'" +
+            "                         'FUNCTION'\n" +
+            "                         ,'PACKAGE'\n" +
+            "                         ,'PROCEDURE'\n" +
+            "                         ,'TYPE'\n" +
+            "                         ,'VIEW'\n" +
+            "                         ,'SEQUENCE'\n" +
+            "                         ,'SYNONYM'\n" +
+            "                         ,'TABLE'\n" +
+            "                         ,'TRIGGER'" +
             ")\n" +
             " order by a.object_type";
 

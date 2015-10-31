@@ -20,13 +20,20 @@ public class TableTest {
     @Test
     public void testSetComment() throws Exception {
         table.setComment("test");
-        assertTrue("Не учитывается комментарий",table.getSource().contains("comment on table test is 'test';"));
+        assertTrue("Не учитывается комментарий", table.getSource().contains("comment on table test is 'test';"));
     }
 
     @Test
     public void testGetSource() throws Exception {
-        assertEquals("Неверный текст исходника", table.getSource(), "CREATE TABLE test\n;");
+        assertEquals("Неверный текст исходника", table.getSource(), "CREATE TABLE test\n" +
+                "(\n" +
+                "\n" +
+                ");");
         table.addColumnComment(new TableColumnComment("colName", "tabName", "comment"));
-        assertEquals("Неверный текст исходника", table.getSource(), "CREATE TABLE test\n;\ncomment on column tabName.colName  is 'comment';\n");
+        assertEquals("Неверный текст исходника", table.getSource(), "CREATE TABLE test\n" +
+                "(\n" +
+                "\n" +
+                ");\n" +
+                "comment on column tabName.colName  is 'comment';");
     }
 }

@@ -8,25 +8,12 @@ public class TableColumnComment {
 
     private String tabName;
 
-
-    public String getComment() {
-        return comment;
-    }
-
     public void setComment(String comment) {
         this.comment = comment;
     }
 
-    public String getColName() {
-        return colName;
-    }
-
     public void setColName(String colName) {
         this.colName = colName;
-    }
-
-    public String getTabName() {
-        return tabName;
     }
 
     public void setTabName(String tabName) {
