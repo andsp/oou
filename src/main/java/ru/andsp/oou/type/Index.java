@@ -60,9 +60,9 @@ public class Index extends OracleObject {
     public String getSource() {
         StringBuilder source = new StringBuilder("create ");
         if (unique) {
-            source.append("unique");
+            source.append("unique ");
         } else if (bitmap) {
-            source.append("bitmap");
+            source.append("bitmap ");
         }
         source.append("index ")
                 .append(name)
