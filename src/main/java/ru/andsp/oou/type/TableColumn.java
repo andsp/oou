@@ -8,16 +8,16 @@ public class TableColumn extends OracleObject {
      * Для строк длинна строки
      * Для чисел общая длинна числа
      */
-    private Integer length;
+    private int length;
 
     /**
      * Используется только для чисел
      * Кол-во цифр после запятой
      */
-    private Integer decimal;
+    private int decimal;
 
 
-    private Integer numberLength;
+    private int numberLength;
 
 
     private boolean nullable = true;
@@ -61,8 +61,8 @@ public class TableColumn extends OracleObject {
             case VARCHAR2:
                 return String.format("(%s)", this.length);
             case NUMBER:
-                return numberLength != null && decimal != null ? String.format("(%d,%d)", numberLength, decimal) :
-                        numberLength != null ? String.format("(%d)", this.numberLength) : null;
+                return numberLength > 0 && decimal > 0 ? String.format("(%d,%d)", numberLength, decimal) :
+                        numberLength > 0 ? String.format("(%d)", this.numberLength) : null;
             default:
                 return null;
         }
