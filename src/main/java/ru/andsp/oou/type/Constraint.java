@@ -1,14 +1,92 @@
 package ru.andsp.oou.type;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Constraint extends OracleObject {
 
+    private String tableName;
 
-    Constraint(String name) {
+    private TypeConstraint type;
+
+    private List<String> columns;
+
+    private String referTableName;
+
+    private List<String> referColumns;
+
+    private boolean deferrable;
+
+    private boolean deferred;
+
+    public void setDeferrable(boolean deferrable) {
+        this.deferrable = deferrable;
+    }
+
+    public void setDeferred(boolean deferred) {
+        this.deferred = deferred;
+    }
+
+    public Constraint(String name) {
         super(name);
+        columns = new ArrayList<>();
+        referColumns = new ArrayList<>();
+    }
+
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
+    }
+
+    public void setType(TypeConstraint type) {
+        this.type = type;
+    }
+
+    public void setReferTableName(String referTableName) {
+        this.referTableName = referTableName;
+    }
+
+    public void addColumn(String column) {
+        columns.add(column);
+    }
+
+    public void addReferColumn(String referColumn) {
+        referColumns.add(referColumn);
+    }
+
+    private String getColumns(List<String> cols) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < cols.size(); i++) {
+            builder.append(cols.get(i));
+            if (i + 1 < cols.size()) {
+                builder.append(",");
+            }
+        }
+        return builder.toString();
     }
 
     @Override
     public String getSource() {
-        return null;
+        switch (type) {
+            case PRIMARY: {
+                return String.format("alter table %s add constraint %s primary key (%s);", tableName, name, getColumns(columns));
+            }
+            case FOREIGN: {
+                StringBuilder builder = new StringBuilder();
+                builder.append(String.format("alter table %s add constraint %s foreign key (%s) references %s (%s)", tableName, name, getColumns(columns), referTableName, getColumns(referColumns)));
+                if(deferrable){
+                    builder.append(" deferrable");
+                    if(deferred){
+                        builder.append(" initially deferred");
+                    }
+                }
+                builder.append(";");
+                return builder.toString();
+            }
+            case UNIQUE: {
+                return String.format("alter table %s add constraint %s unique (%s);", tableName, name, getColumns(columns));
+            }
+            default:
+                return null;
+        }
     }
 }
