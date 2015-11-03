@@ -28,6 +28,7 @@ public class Table extends OracleObject {
         columnList = new ArrayList<>();
         commentList = new ArrayList<>();
         indexList = new ArrayList<>();
+        constraintList = new ArrayList<>();
     }
 
     public void addColumn(TableColumn column) {
@@ -40,6 +41,10 @@ public class Table extends OracleObject {
 
     public void addIndex(Index index) {
         indexList.add(index);
+    }
+
+    public void addConstraint(Constraint constraint) {
+        constraintList.add(constraint);
     }
 
     public boolean isTemporary() {
@@ -95,6 +100,15 @@ public class Table extends OracleObject {
         return sb.toString();
     }
 
+    private String getConstraintSource() {
+        StringBuilder sb = new StringBuilder();
+        for (Constraint c : constraintList) {
+            sb.append("\n");
+            sb.append(c.getSource());
+        }
+        return sb.toString();
+    }
+
     @Override
     public String getSource() {
         StringBuilder sb = new StringBuilder(String.format("CREATE TABLE %s\n", name));
@@ -120,6 +134,8 @@ public class Table extends OracleObject {
         // index
         if (!indexList.isEmpty())
             sb.append("\n").append(getIndexSource());
+        if (!constraintList.isEmpty())
+            sb.append("\n").append(getConstraintSource());
 
         return sb.toString();
     }

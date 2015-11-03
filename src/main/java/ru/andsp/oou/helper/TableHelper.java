@@ -82,7 +82,8 @@ public class TableHelper implements ObjectHelper {
     }
 
     private void constraintsLoad(Connection connection) throws SQLException {
-
+        ConstraintHelper helper = new ConstraintHelper();
+        helper.loadFromTable(connection, table);
     }
 
 

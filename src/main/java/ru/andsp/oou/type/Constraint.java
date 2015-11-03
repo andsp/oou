@@ -7,7 +7,7 @@ public class Constraint extends OracleObject {
 
     private String tableName;
 
-    private TypeConstraint type;
+    private TypeConstraint constraintType;
 
     private List<String> columns;
 
@@ -19,6 +19,12 @@ public class Constraint extends OracleObject {
 
     private boolean deferred;
 
+    public Constraint(String name) {
+        super(name);
+        columns = new ArrayList<>();
+        referColumns = new ArrayList<>();
+    }
+
     public void setDeferrable(boolean deferrable) {
         this.deferrable = deferrable;
     }
@@ -27,18 +33,16 @@ public class Constraint extends OracleObject {
         this.deferred = deferred;
     }
 
-    public Constraint(String name) {
-        super(name);
-        columns = new ArrayList<>();
-        referColumns = new ArrayList<>();
-    }
-
     public void setTableName(String tableName) {
         this.tableName = tableName;
     }
 
-    public void setType(TypeConstraint type) {
-        this.type = type;
+    public TypeConstraint getConstraintType() {
+        return constraintType;
+    }
+
+    public void setConstraintType(TypeConstraint constraintType) {
+        this.constraintType = constraintType;
     }
 
     public void setReferTableName(String referTableName) {
@@ -66,16 +70,16 @@ public class Constraint extends OracleObject {
 
     @Override
     public String getSource() {
-        switch (type) {
+        switch (constraintType) {
             case PRIMARY: {
                 return String.format("alter table %s add constraint %s primary key (%s);", tableName, name, getColumns(columns));
             }
             case FOREIGN: {
                 StringBuilder builder = new StringBuilder();
                 builder.append(String.format("alter table %s add constraint %s foreign key (%s) references %s (%s)", tableName, name, getColumns(columns), referTableName, getColumns(referColumns)));
-                if(deferrable){
+                if (deferrable) {
                     builder.append(" deferrable");
-                    if(deferred){
+                    if (deferred) {
                         builder.append(" initially deferred");
                     }
                 }
