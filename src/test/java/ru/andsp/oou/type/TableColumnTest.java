@@ -44,6 +44,17 @@ public class TableColumnTest {
     }
 
     @Test
+    public void testNumber() throws Exception {
+        TableColumn column = new TableColumn("test");
+        column.setTypes(DataTypes.NUMBER);
+        assertEquals(column.getSource(), "test number");
+        column.setNumberLength(18);
+        assertEquals(column.getSource(), "test number(18)");
+        column.setDecimal(2);
+        assertEquals(column.getSource(), "test number(18,2)");
+    }
+
+    @Test
     public void testSetLength() throws Exception {
         tc.setTypes(DataTypes.VARCHAR2);
         tc.setLength(10);
@@ -54,23 +65,18 @@ public class TableColumnTest {
     public void testSetDefValue() throws Exception {
         tc.setTypes(DataTypes.VARCHAR2);
         tc.setLength(4000);
-        tc.setDefValue("testSetDefValue");
-        assertTrue(tc.getSource().contains("testSetDefValue"));
+        tc.setDefValue("'testSetDefValue'");
+        assertEquals(tc.getSource(),"test varchar2(4000) default 'testSetDefValue'");
     }
 
-    @Test
-    public void testSetDecimal() throws Exception {
-        tc.setTypes(DataTypes.NUMBER);
-        tc.setNumberLength(18);
-        tc.setDecimal(2);
-        assertEquals("не верно учитывается кол-во десятичной дроби", tc.getSource(), "test number(18,2)");
-    }
 
     @Test
     public void testSetNullable() throws Exception {
         tc.setTypes(DataTypes.NUMBER);
         tc.setNullable(false);
         assertEquals("не верно учитывается not null", tc.getSource(), "test number not null");
+        tc.setNullable(true);
+        assertEquals("не верно учитывается not null", tc.getSource(), "test number");
     }
 
     @Test

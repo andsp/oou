@@ -75,7 +75,7 @@ public class TableColumn extends OracleObject {
         if (getLengthSource() != null)
             sb.append(this.getLengthSource());
         if (defValue != null) {
-            sb.append(String.format("default %s", this.defValue));
+            sb.append(String.format(" default %s", this.defValue));
         }
         if (!this.nullable) {
             sb.append(" not null");
