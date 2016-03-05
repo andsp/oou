@@ -29,12 +29,22 @@ public class SourceHelper implements ObjectHelper {
                 try (ResultSet resultSet = statement.executeQuery()) {
                     while (resultSet.next()) {
                         if (resultSet.getInt("PR_BREAK") == 1) {
-                            sb.append("\n/\nCREATE OR REPLACE ");
+                            if(sb.charAt(sb.length()-1)== '\n'){
+                                sb.append("/");
+                            }else{
+                                sb.append("\n/");
+                            }
+                            sb.append("\nCREATE OR REPLACE ");
                         }
                         sb.append(resultSet.getString("TEXT"));
                     }
                 }
             }
+        }
+        if(sb.charAt(sb.length()-1)== '\n'){
+            sb.append("/");
+        }else{
+            sb.append("\n/");
         }
         SourceObjectContract sourceObject = (SourceObjectContract) OracleObjectFactory.createObject(name, type);
         if (sourceObject != null)
