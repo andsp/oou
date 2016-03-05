@@ -28,7 +28,8 @@ public class ConstraintHelper implements ObjectHelper {
             "  left join user_constraints rc\n" +
             "    on rc.constraint_name = c.r_constraint_name\n" +
             " where c.constraint_type in ('P', 'R', 'U')\n" +
-            "   and c.table_name = ?";
+            "   and c.table_name = ?\n" +
+            " order by  c.constraint_name ";
 
     private static final String CONSTRAINT_COLUMN_QUERY = "select c.column_name\n" +
             "  from user_cons_columns c\n" +
