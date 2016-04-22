@@ -4,19 +4,23 @@ package ru.andsp.oou.ui;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 class InstanceTableModel implements TableModel {
 
-    private final List<Instance> data;
+    private List<Instance> items;
 
-    public InstanceTableModel(List<Instance> data) {
-        this.data = (data == null) ? new ArrayList<Instance>() : data;
+    public InstanceTableModel(HashMap<String, Instance> data) {
+        this.items = new ArrayList<>();
+        if (data != null) {
+            data.forEach((k, v) -> items.add(v));
+        }
     }
 
 
     public int getRowCount() {
-        return data.size();
+        return items.size();
     }
 
     public int getColumnCount() {
@@ -54,7 +58,7 @@ class InstanceTableModel implements TableModel {
     }
 
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Instance instance = data.get(rowIndex);
+        Instance instance = items.get(rowIndex);
         switch (columnIndex) {
             case 0: {
                 return instance.getHost();
@@ -89,6 +93,6 @@ class InstanceTableModel implements TableModel {
     }
 
     public Instance getItem(int rowIndex) {
-        return rowIndex < data.size() & rowIndex>=0 ? data.get(rowIndex) : null;
+        return rowIndex < items.size() & rowIndex >= 0 ? items.get(rowIndex) : null;
     }
 }

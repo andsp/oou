@@ -1,9 +1,11 @@
 package ru.andsp.oou.ui;
 
 
-public class Instance {
+import java.io.Serializable;
 
-    private int id;
+public class Instance implements Serializable {
+
+    private String id;
 
     private String path;
 
@@ -21,21 +23,11 @@ public class Instance {
     public Instance() {
     }
 
-    public Instance(int id, String path, String host, String port, String user, String pass, String db) {
-        this.id = id;
-        this.path = path;
-        this.host = host;
-        this.port = port;
-        this.user = user;
-        this.pass = pass;
-        this.db = db;
-    }
-
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -88,7 +80,7 @@ public class Instance {
     }
 
     public boolean isNew() {
-        return !(id > 0);
+        return (id == null);
     }
 
     @Override

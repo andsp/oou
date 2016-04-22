@@ -1,11 +1,9 @@
 package ru.andsp.oou.ui;
 
-import ru.andsp.oou.ui.db.InstanceHelper;
+import ru.andsp.oou.ui.config.ConfigHelper;
 
 import javax.swing.*;
-import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
 
 
 public class MainForm {
@@ -30,27 +28,12 @@ public class MainForm {
         frame.setVisible(true);
     }
 
-    private List<Instance> getData() {
-        try {
-            InstanceHelper helper = new InstanceHelper();
-            return helper.getList();
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     private void refresh() {
-        try (InstanceHelper helper = new InstanceHelper()) {
-            List<Instance> instances = helper.getList();
-            tblMain.setModel(new InstanceTableModel(instances));
-        } catch (ClassNotFoundException | SQLException | IOException e) {
-            e.printStackTrace();
-        }
+        tblMain.setModel(new InstanceTableModel(ConfigHelper.getInstance().getInstances()));
     }
 
     private void initUI() {
-        tblMain.setModel(new InstanceTableModel(getData()));
+        tblMain.setModel(new InstanceTableModel(ConfigHelper.getInstance().getInstances()));
         tblMain.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         btAdd.addActionListener(e -> {
             PropertyForm.start(null);
@@ -66,14 +49,7 @@ public class MainForm {
                 int dialogButton = JOptionPane.YES_NO_OPTION;
                 int dialogResult = JOptionPane.showConfirmDialog(null, "Remove row ?", "Confirm", dialogButton);
                 if (dialogResult == 0) {
-                    try (InstanceHelper helper = new InstanceHelper()) {
-
-
-                        helper.remove(instance.getId());
-
-                    } catch (ClassNotFoundException | SQLException | IOException e1) {
-                        e1.printStackTrace();
-                    }
+                    ConfigHelper.getInstance().remove(instance);
                     refresh();
                 }
             }

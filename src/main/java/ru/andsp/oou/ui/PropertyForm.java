@@ -1,11 +1,9 @@
 package ru.andsp.oou.ui;
 
-import ru.andsp.oou.ui.db.InstanceHelper;
+import ru.andsp.oou.ui.config.ConfigHelper;
 
 import javax.swing.*;
 import java.awt.event.*;
-import java.io.IOException;
-import java.sql.SQLException;
 
 public class PropertyForm extends JDialog {
     private JPanel contentPane;
@@ -26,32 +24,17 @@ public class PropertyForm extends JDialog {
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
 
-        buttonOK.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOK();
-            }
-        });
+        buttonOK.addActionListener(e -> onOK());
 
-        buttonCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        });
+        buttonCancel.addActionListener(e -> onCancel());
 
-// call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 onCancel();
             }
         });
-
-// call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
 
@@ -70,13 +53,7 @@ public class PropertyForm extends JDialog {
     }
 
     private void onOK() {
-        try {
-            try (InstanceHelper helper = new InstanceHelper()) {
-                helper.save(getInstance());
-            }
-        } catch (IOException | SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        ConfigHelper.getInstance().save(getInstance());
         dispose();
     }
 
