@@ -3,7 +3,7 @@ package ru.andsp.oou.ui.config;
 
 import java.io.IOException;
 
-public interface FileHelper {
+interface FileHelper {
 
     String readFile(String fileName) throws IOException;
 

@@ -9,7 +9,7 @@ import java.util.List;
 
 class InstanceTableModel implements TableModel {
 
-    private List<Instance> items;
+    private final List<Instance> items;
 
     public InstanceTableModel(HashMap<String, Instance> data) {
         this.items = new ArrayList<>();

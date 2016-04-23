@@ -12,7 +12,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ObjectProvider {
+class ObjectProvider {
 
     private static final String ALL_OBJECT_QUERY = "select a.object_type,\n" +
             "       a.object_name \n" +

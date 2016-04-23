@@ -17,7 +17,6 @@ import java.sql.SQLException;
 public class IndexHelper implements ObjectHelper {
 
     private static final String UNIQUE = "UNIQUE";
-    private static final String NONUNIQUE = "NONUNIQUE";
     private static final String BITMAP = "BITMAP";
 
     private static final String INDEX_QUERY = "select i.index_name, i.table_name, i.uniqueness, i.tablespace_name\n" +
@@ -55,7 +54,7 @@ public class IndexHelper implements ObjectHelper {
                             index.setBitmap(true);
                         }
                     }
-                    index.setTablename(table.getName());
+                    index.setTableName(table.getName());
                     index.setTablespace(resultSet.getString("TABLESPACE_NAME"));
                     indexColumnLoad(connection, index);
                     table.addIndex(index);

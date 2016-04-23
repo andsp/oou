@@ -6,7 +6,7 @@ import ru.andsp.oou.helper.*;
 import ru.andsp.oou.type.TypeObject;
 
 
-public class HelperFactory {
+class HelperFactory {
 
 
     public static synchronized ObjectHelper getHelper(TypeObject type) {

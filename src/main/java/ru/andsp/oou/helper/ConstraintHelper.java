@@ -17,7 +17,7 @@ public class ConstraintHelper implements ObjectHelper {
     private static final String FOREIGN = "R";
     private static final String UNIQUE = "U";
 
-    private static final String CONSTAINT_QUERY = "select c.constraint_name,\n" +
+    private static final String CONSTRAINT_QUERY = "select c.constraint_name,\n" +
             "       c.table_name,\n" +
             "       c.constraint_type,\n" +
             "       c.deferrable,\n" +
@@ -53,7 +53,7 @@ public class ConstraintHelper implements ObjectHelper {
     }
 
     public void loadFromTable(Connection connection, Table table) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(CONSTAINT_QUERY)) {
+        try (PreparedStatement statement = connection.prepareStatement(CONSTRAINT_QUERY)) {
             statement.setString(1, table.getName());
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {

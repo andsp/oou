@@ -6,7 +6,7 @@ public class View extends OracleObject{
     private String text;
 
 
-    public String getText() {
+    private String getText() {
         return text;
     }
 

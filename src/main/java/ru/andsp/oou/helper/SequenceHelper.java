@@ -14,6 +14,9 @@ import java.sql.SQLException;
 
 public class SequenceHelper implements ObjectHelper {
 
+
+    private static final String FLAG_NOT = "N";
+
     private static final String SEQUENCE_QUERY = "select s.min_value,\n" +
             "       s.max_value,\n" +
             "       s.increment_by,\n" +
@@ -23,6 +26,8 @@ public class SequenceHelper implements ObjectHelper {
             "       s.last_number\n" +
             "  from user_sequences s\n" +
             " where s.sequence_name = ?";
+
+
 
     public OracleObject load(DataSource dataSource, TypeObject type, String name) throws SQLException {
         Sequence sequence = new Sequence(name);
@@ -36,8 +41,8 @@ public class SequenceHelper implements ObjectHelper {
                         sequence.setIncrement(resultSet.getBigDecimal("INCREMENT_BY").toBigInteger());
                         sequence.setStart(resultSet.getBigDecimal("LAST_NUMBER").toBigInteger());
                         sequence.setCache(resultSet.getBigDecimal("CACHE_SIZE").toBigInteger());
-                        sequence.setCycle(resultSet.getString("CYCLE_FLAG").equals("N"));
-                        sequence.setOrder(resultSet.getString("ORDER_FLAG").equals("N"));
+                        sequence.setCycle(resultSet.getString("CYCLE_FLAG").equals(FLAG_NOT));
+                        sequence.setOrder(resultSet.getString("ORDER_FLAG").equals(FLAG_NOT));
                     }
                 }
             }

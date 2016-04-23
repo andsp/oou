@@ -13,13 +13,13 @@ public class Table extends OracleObject {
 
     private boolean preserve;
 
-    private List<TableColumn> columnList;
+    private final List<TableColumn> columnList;
 
-    private List<TableColumnComment> commentList;
+    private final List<TableColumnComment> commentList;
 
-    private List<Constraint> constraintList;
+    private final List<Constraint> constraintList;
 
-    private List<Index> indexList;
+    private final List<Index> indexList;
 
 
     public Table(String name) {

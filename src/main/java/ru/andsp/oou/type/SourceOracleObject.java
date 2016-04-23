@@ -4,9 +4,9 @@ import ru.andsp.oou.contract.SourceObjectContract;
 
 public class SourceOracleObject extends OracleObject implements SourceObjectContract {
 
-    protected String source;
+    private String source;
 
-    public SourceOracleObject(String name) {
+    SourceOracleObject(String name) {
         super(name);
     }
 

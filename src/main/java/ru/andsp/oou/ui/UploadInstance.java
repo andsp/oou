@@ -10,7 +10,7 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.util.Locale;
 
-public class UploadInstance {
+class UploadInstance {
 
     private static DataSource getDataSource(Instance instance) {
         HikariConfig config = new HikariConfig();

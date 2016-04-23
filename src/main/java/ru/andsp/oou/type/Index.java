@@ -6,11 +6,11 @@ import java.util.List;
 
 public class Index extends OracleObject {
 
-    private List<String> columns;
+    private final List<String> columns;
 
     private String tablespace;
 
-    private String tablename;
+    private String tableName;
 
     private boolean unique;
 
@@ -25,8 +25,8 @@ public class Index extends OracleObject {
         this.unique = unique;
     }
 
-    public void setTablename(String tablename) {
-        this.tablename = tablename;
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
     }
 
     public void setTablespace(String tablespace) {
@@ -67,7 +67,7 @@ public class Index extends OracleObject {
         source.append("index ")
                 .append(name)
                 .append(" on ")
-                .append(tablename)
+                .append(tableName)
                 .append("(")
                 .append(getColumns())
                 .append(")");

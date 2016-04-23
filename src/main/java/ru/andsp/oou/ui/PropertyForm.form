@@ -65,6 +65,7 @@
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <labelFor value="cf6af"/>
               <text value="&amp;Host"/>
             </properties>
           </component>
@@ -88,6 +89,7 @@
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <labelFor value="b4957"/>
               <text value="&amp;Port"/>
             </properties>
           </component>
@@ -109,6 +111,7 @@
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <labelFor value="252db"/>
               <text value="&amp;Db"/>
             </properties>
           </component>
@@ -117,6 +120,7 @@
               <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <labelFor value="55891"/>
               <text value="&amp;User"/>
             </properties>
           </component>
@@ -125,6 +129,7 @@
               <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <labelFor value="2d7b3"/>
               <text value="P&amp;assword"/>
             </properties>
           </component>
@@ -164,6 +169,7 @@
               <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <labelFor value="3f904"/>
               <text value="Directory &amp;result"/>
             </properties>
           </component>

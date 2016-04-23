@@ -77,4 +77,7 @@
       </component>
     </children>
   </grid>
+  <inspectionSuppressions>
+    <suppress inspection="NoLabelFor" id="a862e"/>
+  </inspectionSuppressions>
 </form>

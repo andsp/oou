@@ -9,11 +9,11 @@ public class Constraint extends OracleObject {
 
     private TypeConstraint constraintType;
 
-    private List<String> columns;
+    private final List<String> columns;
 
     private String referTableName;
 
-    private List<String> referColumns;
+    private final List<String> referColumns;
 
     private boolean deferrable;
 

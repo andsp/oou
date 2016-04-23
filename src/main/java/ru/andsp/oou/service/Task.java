@@ -8,15 +8,15 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 
-public class Task implements Runnable {
+class Task implements Runnable {
 
     private OracleObject object;
 
-    private String path;
+    private final String path;
 
-    private DataSource dataSource;
+    private final DataSource dataSource;
 
-    private ProgressCallBack callBack;
+    private final ProgressCallBack callBack;
 
     public Task(DataSource dataSource, OracleObject object, String path, ProgressCallBack callBack) {
         this.object = object;

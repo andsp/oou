@@ -109,13 +109,13 @@ public class TableHelper implements ObjectHelper {
             tableLoad(connection);
             columnsLoad(connection);
             constraintsLoad(connection);
-            indexsLoad(connection);
+            indexLoad(connection);
             columnCommentsLoad(connection);
         }
         return table;
     }
 
-    private void indexsLoad(Connection connection) throws SQLException {
+    private void indexLoad(Connection connection) throws SQLException {
         IndexHelper helper = new IndexHelper();
         helper.loadFromTable(connection, table);
     }

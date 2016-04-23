@@ -16,7 +16,7 @@ public class ConfigHelper {
 
     private static final String FILE_CONFIG = "config.json";
 
-    private FileHelper fileHelper;
+    private final FileHelper fileHelper;
 
     private HashMap<String, Instance> instanceList;
 
@@ -31,7 +31,7 @@ public class ConfigHelper {
         return instances;
     }
 
-    public ConfigHelper(FileHelper fileHelper) {
+    private ConfigHelper(FileHelper fileHelper) {
         this.fileHelper = fileHelper;
     }
 
@@ -46,7 +46,7 @@ public class ConfigHelper {
         return instanceList;
     }
 
-    public void saveConfig() {
+    private void saveConfig() {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String source = gson.toJson(instanceList);
         try {
