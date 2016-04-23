@@ -1,12 +1,13 @@
 package ru.andsp.oou.ui;
 
+import ru.andsp.oou.service.ProgressCallBack;
 import ru.andsp.oou.ui.config.ConfigHelper;
 
 import javax.swing.*;
 import java.sql.SQLException;
 
 
-public class MainForm {
+public class MainForm implements ProgressCallBack {
     private JPanel pnMain;
     private JTable tblMain;
     private JToolBar tbMain;
@@ -15,6 +16,7 @@ public class MainForm {
     private JButton btRemove;
     private JButton btRun;
     private JScrollPane spMain;
+    private JProgressBar progressBar;
 
 
     public static void start() {
@@ -30,6 +32,18 @@ public class MainForm {
 
     private void refresh() {
         tblMain.setModel(new InstanceTableModel(ConfigHelper.getInstance().getInstances()));
+    }
+
+    private void startLoad(ProgressCallBack progressCallBack) {
+        progressBar.setValue(0);
+        progressBar.setString(null);
+        new Thread(() -> {
+            try {
+                UploadInstance.start(((InstanceTableModel) tblMain.getModel()).getItem(tblMain.getSelectedRow()), progressCallBack);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 
     private void initUI() {
@@ -54,14 +68,22 @@ public class MainForm {
                 }
             }
         });
-        btRun.addActionListener(e -> {
-            try {
-                UploadInstance.start(((InstanceTableModel) tblMain.getModel()).getItem(tblMain.getSelectedRow()));
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }
-        });
+        btRun.addActionListener(e -> this.startLoad(this));
+        progressBar.setMinimum(0);
+        progressBar.setStringPainted(true);
     }
 
 
+    @Override
+    public void setStartCount(int count) {
+        progressBar.setMaximum(count);
+    }
+
+    @Override
+    public void reportOfFinished(String name) {
+        synchronized (this) {
+            progressBar.setValue(progressBar.getValue() + 1);
+            progressBar.setString(name);
+        }
+    }
 }

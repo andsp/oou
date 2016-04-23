@@ -4,6 +4,7 @@ package ru.andsp.oou.ui;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import ru.andsp.oou.service.ObjectUploader;
+import ru.andsp.oou.service.ProgressCallBack;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
@@ -22,11 +23,15 @@ public class UploadInstance {
         return new HikariDataSource(config);
     }
 
-    public static synchronized void start(Instance instance) throws SQLException {
-        DataSource dataSource = getDataSource(instance);
-        ObjectUploader objectUploader = new ObjectUploader();
+    public static synchronized void start(Instance instance, ProgressCallBack callBack) throws SQLException {
         long st = System.currentTimeMillis();
-        objectUploader.upload(dataSource, instance.getPath());
-        System.out.println("time "+(System.currentTimeMillis()-st));
+        DataSource dataSource = getDataSource(instance);
+        try {
+            new ObjectUploader().upload(dataSource, instance.getPath(), callBack);
+        } finally {
+            if (dataSource != null)
+                ((HikariDataSource) dataSource).close();
+        }
+        System.out.println("time " + (System.currentTimeMillis() - st));
     }
 }

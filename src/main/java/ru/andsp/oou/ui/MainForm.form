@@ -47,6 +47,13 @@
               <text value="R&amp;un"/>
             </properties>
           </component>
+          <component id="d8d45" class="javax.swing.JProgressBar" binding="progressBar">
+            <constraints/>
+            <properties>
+              <indeterminate value="false"/>
+              <stringPainted value="true"/>
+            </properties>
+          </component>
         </children>
       </toolbar>
       <scrollpane id="a862e" binding="spMain">

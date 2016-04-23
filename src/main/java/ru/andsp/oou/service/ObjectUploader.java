@@ -18,17 +18,18 @@ public class ObjectUploader {
 
     private String path;
 
-    public void upload(DataSource dataSource, String path) throws SQLException {
+    public void upload(DataSource dataSource, String path, ProgressCallBack callBack) throws SQLException {
         this.dataSource = dataSource;
         this.path = path;
         objectList = getObjects();
-        process();
+        callBack.setStartCount(objectList.size());
+        process(callBack);
     }
 
-    private void process() {
+    private void process(ProgressCallBack callBack) {
         ExecutorService executorService = Executors.newWorkStealingPool();
         for (OracleObject object : objectList) {
-            Task task = new Task(dataSource, object, path);
+            Task task = new Task(dataSource, object, path, callBack);
             executorService.submit(task);
         }
         executorService.shutdown();

@@ -16,15 +16,18 @@ public class Task implements Runnable {
 
     private DataSource dataSource;
 
-    public Task(DataSource dataSource, OracleObject object, String path) {
+    private ProgressCallBack callBack;
+
+    public Task(DataSource dataSource, OracleObject object, String path, ProgressCallBack callBack) {
         this.object = object;
         this.dataSource = dataSource;
         this.path = path;
+        this.callBack = callBack;
     }
 
 
-    private ObjectHelper getHelper(){
-       return HelperFactory.getHelper(object.getTypeObject());
+    private ObjectHelper getHelper() {
+        return HelperFactory.getHelper(object.getTypeObject());
     }
 
     @Override
@@ -37,7 +40,7 @@ public class Task implements Runnable {
         }
         if (object != null) {
             Storage.save(object, path);
-            System.out.println(object.getName());
+            callBack.reportOfFinished(object.getName());
         }
     }
 }
