@@ -2,24 +2,19 @@ package ru.andsp.oou.type;
 
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Table extends OracleObject {
 
 
-    private String comment;
-
-    private boolean temporary;
-
-    private boolean preserve;
-
     private final List<TableColumn> columnList;
-
     private final List<TableColumnComment> commentList;
-
     private final List<Constraint> constraintList;
-
     private final List<Index> indexList;
+    private String comment;
+    private boolean temporary;
+    private boolean preserve;
 
 
     public Table(String name) {
@@ -72,11 +67,12 @@ public class Table extends OracleObject {
 
     private String getColumnSource() {
         StringBuilder sb = new StringBuilder("(\n");
-        for (TableColumn tc : this.columnList) {
-            if (sb.length() > 3) {
-                sb.append("\n,");
+        Iterator<TableColumn> iterator = this.columnList.iterator();
+        while (iterator.hasNext()) {
+            sb.append(" ").append(iterator.next().getSource());
+            if (iterator.hasNext()) {
+                sb.append(",\n");
             }
-            sb.append(tc.getSource());
         }
         sb.append("\n)");
         return sb.toString();

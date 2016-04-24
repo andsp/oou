@@ -22,7 +22,7 @@ public class SourceHelper implements ObjectHelper {
 
     @Override
     public OracleObject load(DataSource dataSource, TypeObject type, String name) throws SQLException {
-        StringBuilder sb = new StringBuilder("CREATE OR REPLACE ");
+        StringBuilder sb = new StringBuilder("create or replace ");
         try (Connection connection = dataSource.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(SOURCE_QUERY)) {
                 statement.setString(1, name.toUpperCase());
@@ -34,7 +34,7 @@ public class SourceHelper implements ObjectHelper {
                             }else{
                                 sb.append("\n/");
                             }
-                            sb.append("\nCREATE OR REPLACE ");
+                            sb.append("\ncreate or replace ");
                         }
                         sb.append(resultSet.getString("TEXT"));
                     }
