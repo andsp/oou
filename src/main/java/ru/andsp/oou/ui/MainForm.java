@@ -47,8 +47,8 @@ public class MainForm implements ProgressCallBack {
     }
 
     private void initUI() {
-        tblMain.setModel(new InstanceTableModel(ConfigHelper.getInstance().getInstances()));
         tblMain.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        refresh();
         btAdd.addActionListener(e -> {
             PropertyForm.start(null);
             refresh();

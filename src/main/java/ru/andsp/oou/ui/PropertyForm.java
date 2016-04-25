@@ -3,7 +3,10 @@ package ru.andsp.oou.ui;
 import ru.andsp.oou.ui.config.ConfigHelper;
 
 import javax.swing.*;
-import java.awt.event.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.File;
 
 public class PropertyForm extends JDialog {
     private JPanel contentPane;
@@ -14,7 +17,8 @@ public class PropertyForm extends JDialog {
     private JTextField tfDb;
     private JTextField tfUser;
     private JTextField tfDirectory;
-    private JTextField tfPass;
+    private JPasswordField pfPass;
+    private JButton btSelectDir;
 
 
     private Instance instance;
@@ -28,6 +32,8 @@ public class PropertyForm extends JDialog {
 
         buttonCancel.addActionListener(e -> onCancel());
 
+        btSelectDir.addActionListener(e -> onSelectDir());
+
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -35,6 +41,17 @@ public class PropertyForm extends JDialog {
             }
         });
         contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+    }
+
+    private void onSelectDir() {
+        JFileChooser chooser = new JFileChooser();
+        chooser.setCurrentDirectory(tfDirectory.getText() != null ? new File(tfDirectory.getText()) : new File("."));
+        chooser.setDialogTitle("Select dir result");
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        chooser.setAcceptAllFileFilterUsed(false);
+        if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            tfDirectory.setText(chooser.getSelectedFile().getAbsolutePath());
+        }
     }
 
 
@@ -48,7 +65,7 @@ public class PropertyForm extends JDialog {
         result.setPort(tfPort.getText());
         result.setDb(tfDb.getText());
         result.setUser(tfUser.getText());
-        result.setPass(tfPass.getText());
+        result.setPass(new String(pfPass.getPassword()));
         return result;
     }
 
@@ -77,7 +94,7 @@ public class PropertyForm extends JDialog {
             tfDirectory.setText(instance.getPath());
             tfUser.setText(instance.getUser());
             tfDb.setText(instance.getDb());
-            tfPass.setText(instance.getPass());
+            pfPass.setText(instance.getPass());
         }
     }
 
