@@ -4,6 +4,8 @@ import ru.andsp.oou.service.ProgressCallBack;
 import ru.andsp.oou.ui.config.ConfigHelper;
 
 import javax.swing.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 
 
@@ -46,6 +48,13 @@ public class MainForm implements ProgressCallBack {
         }).start();
     }
 
+    private void editAction() {
+        if (tblMain.getSelectedRowCount() > 0) {
+            PropertyForm.start(((InstanceTableModel) tblMain.getModel()).getItem(tblMain.getSelectedRow()));
+            refresh();
+        }
+    }
+
     private void initUI() {
         tblMain.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         refresh();
@@ -53,10 +62,7 @@ public class MainForm implements ProgressCallBack {
             PropertyForm.start(null);
             refresh();
         });
-        btEdit.addActionListener(e -> {
-            PropertyForm.start(((InstanceTableModel) tblMain.getModel()).getItem(tblMain.getSelectedRow()));
-            refresh();
-        });
+        btEdit.addActionListener(e -> editAction());
         btRemove.addActionListener(e -> {
             Instance instance = ((InstanceTableModel) tblMain.getModel()).getItem(tblMain.getSelectedRow());
             if (instance != null && !instance.isNew()) {
@@ -71,6 +77,13 @@ public class MainForm implements ProgressCallBack {
         btRun.addActionListener(e -> this.startLoad(this));
         progressBar.setMinimum(0);
         progressBar.setStringPainted(true);
+        tblMain.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent me) {
+                if (me.getClickCount() == 2) {
+                    editAction();
+                }
+            }
+        });
     }
 
 
